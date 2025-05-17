@@ -35,9 +35,14 @@ Shader "Unlit/FlagWaving"
             {
                 v2f o;
 
-                float wave = sin(_Time.y * _WindSpeed + v.vertex.y * 10.0) * 0.1;
+                float time = _Time.y * _WindSpeed;
+
+                float waveX = sin(time + v.vertex.y * 10.0) * 0.1;
+                float waveZ = cos(time + v.vertex.y * 5.0 + v.vertex.x * 2.0) * 0.05;
+
                 float4 displaced = v.vertex;
-                displaced.x += wave;
+                displaced.x += waveX;
+                displaced.z += waveZ;
 
                 o.pos = UnityObjectToClipPos(displaced);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
